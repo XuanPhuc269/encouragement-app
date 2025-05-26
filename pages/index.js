@@ -5,12 +5,24 @@ export default function Home() {
   const [name, setName] = useState("");
   const [score, setScore] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false); // NEW
 
-  const handleSubmit = () => {
-    // Simualted GPT message generation
-    const generated = `Dead ${name}, aiming for ${score} is amazing! Remember, the journey is just as important as the destination. Keep pushing forward and believe in yourself!`;
-    setMessage(generated);
-    setStep(2);
+  const handleSubmit = async () => {
+    setLoading(true); // NEW
+    try {
+      const response = await fetch("/api/message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, score }),
+      });
+      const data = await response.json();
+      setMessage(data.message || "Something went wrong, please try again.");
+      setStep(2);
+    } catch (error) {
+      setMessage("Failed to generate message. Please try again later.");
+      setStep(2);
+    }
+    setLoading(false); // NEW
   };
 
   return (
@@ -26,14 +38,18 @@ export default function Home() {
             style={styles.input}
           />
           <input
-            type="number"
+            type="text"
             placeholder="Desired English mark"
             value={score}
             onChange={(e) => setScore(e.target.value)}
             style={styles.input}
           />
-          <button onClick={handleSubmit} style={styles.button}>
-            My message for you 🎁
+          <button 
+            onClick={handleSubmit} 
+            style={styles.button}
+            disabled={loading} // NEW
+          >
+            {loading ? "Generating..." : "My message for you 🎁"} {/* NEW */}
           </button>
         </>
       )}
@@ -42,6 +58,17 @@ export default function Home() {
           <h1 style={styles.heading}>🎉 Your Message</h1>
           <p style={styles.message}>{message}</p>
           <p style={styles.from}>From: Your Teacher ❤️</p>
+          <button 
+            style={styles.button}
+            onClick={() => {
+              setStep(1);
+              setName("");
+              setScore("");
+              setMessage("");
+            }}
+          >
+            Back to Info
+          </button>
         </>
       )}
     </main>
