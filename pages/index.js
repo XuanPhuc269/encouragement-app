@@ -14,14 +14,14 @@ export default function Home() {
         fontSize: '3rem',
         fontWeight: 'bold',
         color: '#DC143C'
-      }}>To My Little Warrior</h1>
+      }}>To My Little Warriors</h1>
       <p style={{
         fontFamily: 'Crimson Text, serif',
         fontWeight: 'bold',
         color: '#D8A7A7',
         fontSize: '1.5rem',
         marginTop: '1rem',
-        width: '550px',
+        width: '580px',
         textAlign: 'left'
       }}>About this app</p>
       <TypingAnimation
@@ -32,10 +32,10 @@ export default function Home() {
           lineHeight: '1.5',
           marginBottom: '2rem',
           color: "black",
-          maxWidth: '550px',
+          maxWidth: '580px',
           fontStyle: 'italic',
         }}>
-        Just a little gift I want to send to my students before their high shool entrance exam. Good luck with your exam 🍀🍀🍀
+        A little gift I want to send to my students before their high school entrance exam. Good luck with your exam 🍀🍀🍀
       </TypingAnimation>
       <Link href={"/info"}>
         <button style={{

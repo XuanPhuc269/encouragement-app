@@ -23,9 +23,9 @@ export default function MessagePage() {
                 audioRef.current.volume = 0;
                 audioRef.current.currentTime = 0;
                 audioRef.current.play().then(() => {
-                    audioRef.current.muted = false; // <-- Unmute after play starts
+                    audioRef.current.muted = false; 
                 }).catch(() => {
-                    // Handle play error if needed
+                    
                 });
 
                 // Fade in effect

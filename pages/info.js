@@ -8,13 +8,13 @@ export default function Home() {
   const [name, setName] = useState("");
   const [score, setScore] = useState("");
   const [feeling, setFeelings] = useState("");
-  const [loading, setLoading] = useState(false); // NEW
+  const [loading, setLoading] = useState(false); 
   const [isHovered, setIsHovered] = useState(false);
 
 
   const handleSubmit = async () => {
     if (!name || !score || !feeling) {
-      alert("Vui lòng điền đầy đủ thông tin.");
+      alert("Em hãy điền đầy đủ thông tin.");
       return;
     }
     setLoading(true);
@@ -83,7 +83,7 @@ export default function Home() {
         ...styles.label,
         marginTop: "0",
         marginBottom: "0.5rem",
-      }}>Cảm xúc của em: </label>
+      }}>Hãy để lại chút cảm nhận hiện giờ: </label>
       <textarea
         value={feeling}
         onChange={(e) => setFeelings(e.target.value)}
