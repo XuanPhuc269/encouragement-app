@@ -13,11 +13,31 @@ export default function Home() {
 
 
   const handleSubmit = async () => {
+    if (!name || !score || !feeling) {
+      alert("Vui lòng điền đầy đủ thông tin.");
+      return;
+    }
     setLoading(true);
-    router.push({
-      pathname: "/message",
-      query: { name, score, feeling },
-    });
+     try {
+      const res = await fetch("/api/ai_message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, score, feeling }),
+      });
+      const data = await res.json();
+      setLoading(false);
+      if (data.message) {
+        router.push({
+          pathname: "/message",
+          query: { name, score, message: encodeURIComponent(data.message) },
+        });
+      } else {
+        alert("Lỗi tạo tin nhắn.");
+      }
+    } catch (e) {
+      setLoading(false);
+      alert("Có lỗi xảy ra!");
+    }
   };
 
   return (
@@ -74,8 +94,10 @@ export default function Home() {
       }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        disabled={loading}
       >
-        my message for you</button>
+        {loading ? "preparing..." : "my message for you"}
+      </button>
     </Layout>
   );
 }
@@ -128,16 +150,7 @@ const styles = {
     height: '50px',
     marginTop: '1rem',
   },
-  message: {
-    fontSize: "1.2rem",
-    color: "#333",
-    maxWidth: "600px",
-    marginBottom: "1rem",
-  },
-  from: {
-    color: "#888",
-    fontStyle: "italic",
-  },
+
   label: {
     fontFamily: "Crimson Text, serif",
     color: "black",
