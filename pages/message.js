@@ -1,6 +1,6 @@
 import BackButton from "@/components/BackButton";
 import Layout from "@/components/Layout";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Confetti from 'react-confetti';
 
@@ -10,12 +10,36 @@ export default function MessagePage() {
     const [aiMessage, setAiMessage] = useState("");
     const [showConfetti, setShowConfetti] = useState(false);
     const [confettiPieces, setConfettiPieces] = useState(300);
+    const audioRef = useRef(null);
 
     useEffect(() => {
         if (message) {
             setAiMessage(decodeURIComponent(message));
             setShowConfetti(true);
             setConfettiPieces(300);
+
+            // Play background music
+            if (audioRef.current) {
+                audioRef.current.volume = 0;
+                audioRef.current.currentTime = 0;
+                audioRef.current.play().then(() => {
+                    audioRef.current.muted = false; // <-- Unmute after play starts
+                }).catch(() => {
+                    // Handle play error if needed
+                });
+
+                // Fade in effect
+                let vol = 0;
+                const fadeStep = 0.05;
+                const fadeInterval = setInterval(() => {
+                    if (audioRef.current && vol < 1) {
+                        vol = Math.min(vol + fadeStep, 1);
+                        audioRef.current.volume = vol;
+                    } else {
+                        clearInterval(fadeInterval);
+                    }
+                }, 150); // Adjust speed here (ms)
+            }
 
             // Sau 10s, bắt đầu giảm dần số lượng confetti
             const fadeTimeout = setTimeout(() => {
@@ -51,6 +75,7 @@ export default function MessagePage() {
 
     return (
         <Layout>
+            <audio ref={audioRef} src="/sfx.mp3" autoPlay muted/>
             {showConfetti && (
                 <Confetti
                     width={dimensions.width}
@@ -62,9 +87,16 @@ export default function MessagePage() {
             <div style={{ display: "flex", justifyContent: "center", marginBottom: "1rem" }}>
                 <div style={{ flex: 1 }}>
                     <img
-                        src="/ngoc_ava.png"
+                        src={
+                            name === "Phương Bảo Ngọc"
+                                ?"/ngoc_ava.png"
+                                : name === "Nguyễn Trúc Quỳnh"
+                                ? "/quynh_ava.png"
+                                : "/ava_frame.png"
+
+                        }
                         alt="Student Avatar"
-                        style={{ width: 300, height: 300, borderRadius: "50%", objectFit: "cover" }}
+                        style={{ width: 397, height: 380, borderRadius: "50%", objectFit: "cover", alignContent: "center" }}
                     />
                     <h2 style={{
                         ...styles.heading,
@@ -115,7 +147,7 @@ const styles = {
         borderRadius: "10px",
         padding: "1rem",
         backgroundColor: "#fff",
-        maxWidth: "1000px",
+        maxWidth: "700px",
         marginTop: "1rem",
     },
     heading: {
@@ -124,6 +156,7 @@ const styles = {
         fontSize: "2rem",
         marginBottom: "0.5rem",
         textAlign: "center",
+        fontWeight: "bold",
     },
     subheading: {
         fontFamily: "Crimson Text, serif",
@@ -135,7 +168,7 @@ const styles = {
     message: {
         fontSize: "1.2rem",
         color: "black",
-        maxWidth: "600px",
+        maxWidth: "700px",
         marginBottom: "1rem",
         fontFamily: "Crimson Text, serif",
     },

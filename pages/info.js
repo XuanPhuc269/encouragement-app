@@ -48,19 +48,24 @@ export default function Home() {
       <div style={{ display: "flex", gap: "1rem", alignItems: "center", marginBottom: "1rem" }}>
         <div style={{ flex: 2 }}>
           <label style={styles.label}>Em là:</label>
-          <input
-            type="text"
+          <select
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Chọn tên em"
             style={{
               ...styles.input,
-              width: "250px"
+              width: "250px",
+              cursor: "pointer"
             }}
-          />
+          >
+            <option value="">Chọn tên em</option>
+            <option value="Phương Bảo Ngọc">Ngọc</option>
+            <option value="Nguyễn Việt Anh">Việt Anh</option>
+            <option value="Nguyễn Long Vũ">Vũ</option>
+            <option value="Nguyễn Trúc Quỳnh">Quỳnh</option>
+          </select>
         </div>
         <div style={{ flex: 1 }}>
-          <label style={styles.label}>Điểm số em muốn: </label>
+          <label style={styles.label}>Mục tiêu của em: </label>
           <input
             type="text"
             value={score}
@@ -120,6 +125,7 @@ const styles = {
   },
   heading: {
     fontFamily: "Montagu Slab, serif",
+    fontWeight: "bold",
     color: "#DC143C",
     fontSize: "2.5rem",
     marginBottom: "1rem",

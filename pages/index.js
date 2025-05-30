@@ -1,13 +1,15 @@
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import { useState } from "react";
+import { TypingAnimation } from "@/components/magicui/typing-animation";
+import { AlignCenter } from "lucide-react";
 
 export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <Layout>
-      <h1 style={{ 
+      <h1 style={{
         fontFamily: 'Montagu Slab, serif',
         fontSize: '3rem',
         fontWeight: 'bold',
@@ -15,25 +17,26 @@ export default function Home() {
       }}>To My Little Warrior</h1>
       <p style={{
         fontFamily: 'Crimson Text, serif',
+        fontWeight: 'bold',
         color: '#D8A7A7',
         fontSize: '1.5rem',
         marginTop: '1rem',
         width: '550px',
         textAlign: 'left'
       }}>About this app</p>
-      <p style={{
-        fontFamily: 'Crimson Text, serif',
-        fontSize: '1.2rem',
-        textAlign: 'left',
-        lineHeight: '1.5',
-        marginBottom: '2rem',
-        color: "black",
-        width: '550px',
-        paddingTop: '0.5rem',
-        fontStyle: 'italic'
-      }}>
-        Just a little gift I wanted to send to my students before the big high shool exam 💫.
-      </p>
+      <TypingAnimation
+        style={{
+          fontFamily: 'Crimson Text, serif',
+          fontSize: '1.3rem',
+          textAlign: 'left',
+          lineHeight: '1.5',
+          marginBottom: '2rem',
+          color: "black",
+          maxWidth: '550px',
+          fontStyle: 'italic',
+        }}>
+        Just a little gift I want to send to my students before their high shool entrance exam. Good luck with your exam 🍀🍀🍀
+      </TypingAnimation>
       <Link href={"/info"}>
         <button style={{
           ...styles.button,
