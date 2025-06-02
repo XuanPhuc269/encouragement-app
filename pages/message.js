@@ -80,7 +80,7 @@ export default function MessagePage() {
                     } else {
                         clearInterval(fadeInterval);
                     }
-                }, 150); // Adjust speed here (ms)
+                }, 150); // Adjust speed (ms)
             }
 
             // Sau 10s, bắt đầu giảm dần số lượng confetti
@@ -135,7 +135,9 @@ export default function MessagePage() {
                                 ? "/ngoc_ava.png"
                                 : name === "Nguyễn Trúc Quỳnh"
                                     ? "/quynh_ava.png"
-                                    : "/ava_frame.png"
+                                    : name === "Nguyễn Việt Anh"
+                                        ? "/vietanh_ava.png"
+                                        : "/ava_frame.png"
 
                         }
                         alt="Student Avatar"

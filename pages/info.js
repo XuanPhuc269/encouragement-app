@@ -67,9 +67,19 @@ export default function Home() {
         <div style={{ flex: 1 }}>
           <label style={styles.label}>Mục tiêu của em: </label>
           <input
-            type="text"
+            type="number"
             value={score}
-            onChange={(e) => setScore(e.target.value)}
+            onChange={(e) => {
+                const value = e.target.value;
+                if (value === "" || (Number(value) >= 0 && Number(value) <= 30)) {
+                  setScore(value);
+                } else {
+                  alert("Điểm số phải từ 0 đến 30.");
+                }
+              }
+            }
+            min="0"
+            max="30"
             placeholder="Điểm số mong muốn"
             style={{
               ...styles.input,
