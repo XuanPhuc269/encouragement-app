@@ -3,6 +3,9 @@ import Layout from "@/components/Layout";
 import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Confetti from 'react-confetti';
+import confetti from "canvas-confetti";
+import { Button } from "@/components/ui/button";
+
 
 export default function MessagePage() {
     const router = useRouter();
@@ -11,6 +14,45 @@ export default function MessagePage() {
     const [showConfetti, setShowConfetti] = useState(false);
     const [confettiPieces, setConfettiPieces] = useState(300);
     const audioRef = useRef(null);
+    const applauseAudioRef = useRef(null);
+    const [showGift, setShowGift] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+
+    const triggerFireworks = () => {
+        const duration = 5 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 20001 };
+
+        if (applauseAudioRef.current) {
+            applauseAudioRef.current.volume = 0.7;
+            applauseAudioRef.current.currentTime = 0;
+            applauseAudioRef.current.play();
+        }
+
+        const randomInRange = (min, max) => Math.random() * (max - min) + min;
+
+        const interval = window.setInterval(() => {
+            const timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+
+            const particleCount = 50 * (timeLeft / duration);
+            // Left side fireworks
+            confetti({
+                ...defaults,
+                particleCount,
+                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+            });
+            // Right side fireworks
+            confetti({
+                ...defaults,
+                particleCount,
+                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+            });
+        }, 250);
+    };
 
     useEffect(() => {
         if (message) {
@@ -23,9 +65,9 @@ export default function MessagePage() {
                 audioRef.current.volume = 0;
                 audioRef.current.currentTime = 0;
                 audioRef.current.play().then(() => {
-                    audioRef.current.muted = false; 
+                    audioRef.current.muted = false;
                 }).catch(() => {
-                    
+
                 });
 
                 // Fade in effect
@@ -75,7 +117,8 @@ export default function MessagePage() {
 
     return (
         <Layout>
-            <audio ref={audioRef} src="/sfx.mp3" autoPlay muted/>
+            <audio ref={audioRef} src="/sfx.mp3" autoPlay muted />
+            <audio ref={applauseAudioRef} src="/applause.mp3" preload="auto" />
             {showConfetti && (
                 <Confetti
                     width={dimensions.width}
@@ -89,10 +132,10 @@ export default function MessagePage() {
                     <img
                         src={
                             name === "Phương Bảo Ngọc"
-                                ?"/ngoc_ava.png"
+                                ? "/ngoc_ava.png"
                                 : name === "Nguyễn Trúc Quỳnh"
-                                ? "/quynh_ava.png"
-                                : "/ava_frame.png"
+                                    ? "/quynh_ava.png"
+                                    : "/ava_frame.png"
 
                         }
                         alt="Student Avatar"
@@ -133,9 +176,70 @@ export default function MessagePage() {
                     </p>
                 </div>
             </div>
-
-
-
+            <div style={{ position: "fixed", bottom: 32, left: 0, width: "100%", display: "flex", justifyContent: "center", zIndex: 20 }}>
+                <Button
+                    onClick={() => {
+                        setShowGift(true);
+                        // Replace the old firework logic with the new triggerFireworks function
+                        triggerFireworks();
+                    }}
+                    style={{
+                        ...styles.button,
+                        backgroundColor: isHovered ? "#DC143C" : "white",
+                        color: isHovered ? "white" : "#DC143C",
+                        scale: isHovered ? "1.05" : "1",
+                        transition: "background-color 0.3s ease, transform 0.3s ease",
+                    }}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                >
+                    🎁 <strong>A special gift</strong>
+                </Button>
+            </div>
+            {showGift && (
+                <div
+                    onClick={() => setShowGift(false)}
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        background: "rgba(0,0,0,0.7)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        zIndex: 10000,
+                        backdropFilter: "blur(2px)",
+                    }}
+                >
+                    <div
+                        onClick={e => e.stopPropagation()}
+                        style={{
+                            background: "white",
+                            borderRadius: "16px",
+                            boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
+                            padding: "1.5rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            maxWidth: "90vw",
+                            maxHeight: "90vh",
+                        }}
+                    >
+                        <img
+                            src="/card.png"
+                            alt="Gift Card"
+                            style={{
+                                maxWidth: "80vw",
+                                maxHeight: "70vh",
+                                borderRadius: "12px",
+                                boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
+                            }}
+                        />
+                    </div>
+                </div>
+            )}
         </Layout>
     )
 }
@@ -149,6 +253,14 @@ const styles = {
         backgroundColor: "#fff",
         maxWidth: "700px",
         marginTop: "1rem",
+    },
+    button: {
+        backgroundColor: "none",
+        border: "2px solid #DC143C",
+        borderRadius: "8px",
+        padding: "0.5rem",
+        color: "#DC143C",
+        fontFamily: "Crimson Text, serif",
     },
     heading: {
         fontFamily: "Montagu Slab, serif",
