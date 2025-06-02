@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { use, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import BackButton from "@/components/BackButton";
@@ -39,6 +39,26 @@ export default function Home() {
       alert("Có lỗi xảy ra!");
     }
   };
+
+  // Tải trước tất cả các hình ảnh
+  useEffect(() => {
+    const preloadImages = () => {
+      const imageUrls = [
+        "/ngoc_ava.png", 
+        "/quynh_ava.png", 
+        "/vietanh_ava.png", 
+        "/ava_frame.png",
+        "/card.png"
+      ];
+      
+      imageUrls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+      });
+    };
+    
+    preloadImages();
+  }, []);
 
   return (
     <Layout>
