@@ -136,6 +136,7 @@ const styles = {
     padding: "0.5rem",
     margin: "0.5rem",
     width: "250px",
+    height: "40px",
     borderRadius: "8px",
     border: "1px solid #ccc",
     borderColor: "#d8a7a7",
