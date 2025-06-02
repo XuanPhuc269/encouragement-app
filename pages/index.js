@@ -1,8 +1,7 @@
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import { useState } from "react";
+import { useState } from "react"; // Add useEffect
 import { TypingAnimation } from "@/components/magicui/typing-animation";
-import { AlignCenter } from "lucide-react";
 
 export default function Home() {
   const [isHovered, setIsHovered] = useState(false);

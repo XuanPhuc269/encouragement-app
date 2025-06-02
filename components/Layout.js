@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/router"; // Add router import
 
 const EMOJIS = ["✨", "🌟", "💫", "🥳", "🎉", "🍀", "🦄"];
 
 export default function Layout({ children }) {
   const [sparks, setSparks] = useState([]);
-
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const router = useRouter(); // Get router
+  
+  // Handle click for sparks effect
   const handleClick = (e) => {
     // Lấy vị trí click
     const x = e.clientX;
@@ -23,6 +28,44 @@ export default function Layout({ children }) {
     }, 900);
   };
 
+  // Set up audio when component mounts
+  useEffect(() => {
+    // Browser security requires user interaction before playing audio
+    const handleUserInteraction = () => {
+      if (audioRef.current && !isPlaying && !router.pathname.includes('/message')) {
+        audioRef.current.volume = 0.7; // Set to 30% volume
+        audioRef.current.play()
+          .then(() => {
+            setIsPlaying(true);
+            console.log("Music started playing");
+          })
+          .catch(err => console.log("Audio play failed:", err));
+      }
+    };
+
+    // Add event listeners for user interactions
+    document.addEventListener('click', handleUserInteraction);
+    document.addEventListener('touchstart', handleUserInteraction);
+
+    return () => {
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+    };
+  }, [isPlaying, router.pathname]);
+
+  // Check if we're on the message page and mute audio
+  useEffect(() => {
+    if (!audioRef.current) return;
+    
+    if (router.pathname.includes('/message')) {
+      // On message page - pause audio
+      audioRef.current.pause();
+    } else if (isPlaying) {
+      // On other pages - resume audio if it was playing
+      audioRef.current.play().catch(err => console.log("Resume failed:", err));
+    }
+  }, [router.pathname, isPlaying]);
+
   return (
     <div
       style={{
@@ -36,6 +79,14 @@ export default function Layout({ children }) {
       }}
       onClick={handleClick}
     >
+      {/* Audio element in Layout persists across pages */}
+      <audio 
+        ref={audioRef} 
+        src="/background_music.mp3" 
+        loop 
+        preload="auto"
+      />
+      
       {children}
       {sparks.map(spark => (
         <span
