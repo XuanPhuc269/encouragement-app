@@ -6,7 +6,7 @@ import BackButton from "@/components/BackButton";
 export default function Home() {
   const router = useRouter();
   const [name, setName] = useState("");
-  const [score, setScore] = useState("");
+  const [score, setScore] = useState(0);
   const [feeling, setFeelings] = useState("");
   const [loading, setLoading] = useState(false); 
   const [isHovered, setIsHovered] = useState(false);

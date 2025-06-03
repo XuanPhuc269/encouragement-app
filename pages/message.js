@@ -137,7 +137,9 @@ export default function MessagePage() {
                                     ? "/quynh_ava.png"
                                     : name === "Nguyễn Việt Anh"
                                         ? "/vietanh_ava.png"
-                                        : "/ava_frame.png"
+                                        : name === "Nguyễn Long Vũ" 
+                                            ? "/vu_ava.png"
+                                            : "/ava_frame.png"
 
                         }
                         alt="Student Avatar"
