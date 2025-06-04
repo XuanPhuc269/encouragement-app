@@ -1,40 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+<!-- filepath: /Users/xuanphuctran269/projects/nextjs_projects/encouragement_web/encouragement-app/README.md -->
 
-## Getting Started
+<h1 align="center"> Encouragement App </h1>
 
-First, run the development server:
+<p align="center">
+  <em>A simple web app that gives students special encouragement messages before their high school entrance exams.</em>
+</p>
+
+---
+
+## 🌟 Overview
+
+This app uses <strong>Next.js</strong> and <strong>AI</strong> to create kind, personal messages for students. Students enter their name, target score, and feelings. The app then shows a message, fun animations, and a surprise gift card to help students feel better and more confident.
+
+---
+
+## ✨ Features
+
+- <strong>Personalized Messages</strong>: AI creates a special message for each student
+- <strong>Fun Interface</strong>: Easy to use, with nice animations and effects
+- <strong>Confetti Animation</strong>: Colorful confetti appears with each message
+- <strong>Background Music</strong>: Soft music plays to make the experience nicer
+- <strong>Special Gift Card</strong>: Students can open a virtual gift card with fireworks
+- <strong>Works on All Devices</strong>: The app looks good on phones, tablets, and computers
+
+---
+
+## 🛠️ Technologies Used
+
+- <a href="https://nextjs.org/">Next.js</a> – For building the website
+- <a href="https://openai.com/">OpenAI API</a> – For making the messages
+- <a href="https://www.npmjs.com/package/react-confetti">React Confetti</a> – For confetti effects
+- <a href="https://www.npmjs.com/package/canvas-confetti">Canvas Confetti</a> – For fireworks
+- <a href="https://tailwindcss.com/">TailwindCSS</a> – For styling
+- Custom animations and UI components
+
+---
+
+## 🚀 Getting Started
+
+### What You Need
+
+- Node.js 14.x or newer
+- npm or yarn
+
+### How to Install
+
+1. Clone this repository
+2. Go to the project folder:
+   ```bash
+   cd encouragement_web/encouragement-app
+   ```
+3. Install the needed packages:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+4. Create a <code>.env.local</code> file in the main folder and add your OpenAI API key:
+   ```
+   OPENAI_API_KEY=your_api_key_here
+   ```
+
+### How to Run the App
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to use the app.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+---
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## 📝 How to Use
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+1. <strong>Home Page</strong>: Learn what the app does
+2. <strong>Info Page</strong>: Enter your name, target score, and feelings
+3. <strong>Message Page</strong>: See your special message and confetti
+4. <strong>Special Gift</strong>: Click to open a gift card with fireworks
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📁 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+<pre>
+encouragement-app/
+├── components/    # Reusable parts of the UI
+├── lib/           # Helper functions and AI code
+├── pages/         # Main pages and API routes
+├── public/        # Images, music, and other files
+├── styles/        # CSS and styles
+└── ...            # Other config files
+</pre>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📜 License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+This project is for learning and personal use.
